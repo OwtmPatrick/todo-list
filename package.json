@@ -14,7 +14,18 @@
     "effector": "^22.8.6",
     "effector-react": "^22.5.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@coinbase/wallet-sdk": "3.3.0",
+    "@walletconnect/ethereum-provider": "1.8",
+    "@web3-react/coinbase-wallet": "^8.0.34-beta.0",
+    "@web3-react/core": "8.0.35-beta.0",
+    "@web3-react/gnosis-safe": "^8.0.7-beta.0",
+    "@web3-react/metamask": "^8.0.29-beta.0",
+    "@web3-react/network": "^8.0.27-beta.0",
+    "@web3-react/types": "^8.0.20-beta.0",
+    "@web3-react/walletconnect": "^8.0.36-beta.0",
+    "ethers": "^5.7.2",
+    "react-error-boundary": "^3.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
