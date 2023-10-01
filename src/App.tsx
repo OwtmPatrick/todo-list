@@ -1,15 +1,15 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Header } from './layout/Header';
-import { theme } from './theme';
+import { Footer } from './layout/Footer';
+
+import './App.css';
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
+  <>
     <Header />
 
-    <main>
-      <h1>Content</h1>
-    </main>
+    <Box as="main" flexGrow="1" />
 
-    <footer>footer</footer>
-  </ChakraProvider>
+    <Footer />
+  </>
 );

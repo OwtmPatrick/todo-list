@@ -17,7 +17,7 @@ export const Header = () => (
       p="20px"
       position="relative"
     >
-      <Logo />
+      <Logo wrapperProps={{ w: { base: 100, lg: 150 } }} />
       <Button
         h={{ base: '40px', lg: '48px' }}
         p={{ lg: '0 32px' }}

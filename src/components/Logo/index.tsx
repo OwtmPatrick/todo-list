@@ -1,11 +1,11 @@
-import { Box } from '@chakra-ui/react';
+import { FC } from 'react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { ReactComponent as LogoIcon } from '../../assets/logo.svg';
 
-export const Logo = () => (
+export const Logo: FC<{ wrapperProps?: BoxProps }> = ({ wrapperProps }) => (
   <Box
     as="a"
-    href="/"
-    w={{ base: 100, lg: 150 }}
+    href="#"
     position={{ lg: 'absolute' }}
     top={{ lg: '50%' }}
     left={{ lg: '50%' }}
@@ -13,6 +13,7 @@ export const Logo = () => (
     cursor="pointer"
     _hover={{ opacity: '0.7' }}
     transition="opacity .2s"
+    {...wrapperProps}
   >
     <LogoIcon />
   </Box>
