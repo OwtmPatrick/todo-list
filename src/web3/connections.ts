@@ -42,6 +42,7 @@ export const PRIORITIZED_CONNECTORS: { [key in ConnectionType]: Connection } = {
   [ConnectionType.NETWORK]: buildNetworkConnector()
 };
 
+/* eslint-disable-next-line */
 export function getConnection(c: Connector | ConnectionType) {
   if (c instanceof Connector) {
     const connection = Object.values(PRIORITIZED_CONNECTORS).find(
@@ -51,19 +52,19 @@ export function getConnection(c: Connector | ConnectionType) {
       throw Error('Unsupported Connector');
     }
     return connection;
-  } else {
-    switch (c) {
-      case ConnectionType.INJECTED:
-        return PRIORITIZED_CONNECTORS[ConnectionType.INJECTED];
-      case ConnectionType.COINBASE_WALLET:
-        return PRIORITIZED_CONNECTORS[ConnectionType.COINBASE_WALLET];
-      case ConnectionType.WALLET_CONNECT:
-        return PRIORITIZED_CONNECTORS[ConnectionType.WALLET_CONNECT];
-      case ConnectionType.GNOSIS_SAFE:
-        return PRIORITIZED_CONNECTORS[ConnectionType.GNOSIS_SAFE];
-      case ConnectionType.NETWORK:
-        return PRIORITIZED_CONNECTORS[ConnectionType.NETWORK];
-    }
+  }
+  /* eslint-disable-next-line */
+  switch (c) {
+    case ConnectionType.INJECTED:
+      return PRIORITIZED_CONNECTORS[ConnectionType.INJECTED];
+    case ConnectionType.COINBASE_WALLET:
+      return PRIORITIZED_CONNECTORS[ConnectionType.COINBASE_WALLET];
+    case ConnectionType.WALLET_CONNECT:
+      return PRIORITIZED_CONNECTORS[ConnectionType.WALLET_CONNECT];
+    case ConnectionType.GNOSIS_SAFE:
+      return PRIORITIZED_CONNECTORS[ConnectionType.GNOSIS_SAFE];
+    case ConnectionType.NETWORK:
+      return PRIORITIZED_CONNECTORS[ConnectionType.NETWORK];
   }
 }
 

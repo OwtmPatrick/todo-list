@@ -1,5 +1,6 @@
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { Logo } from '../../components/Logo';
+import { Wallet } from '../../components/Wallet';
 
 export const Header = () => (
   <Box
@@ -18,16 +19,7 @@ export const Header = () => (
       position="relative"
     >
       <Logo wrapperProps={{ w: { base: 100, lg: 150 } }} />
-      <Button
-        h={{ base: '40px', lg: '48px' }}
-        p={{ lg: '0 32px' }}
-        colorScheme="green"
-        color="white"
-        background="green.200"
-        fontSize={{ lg: '18px' }}
-      >
-        Connect wallet
-      </Button>
+      <Wallet />
     </Flex>
   </Box>
 );

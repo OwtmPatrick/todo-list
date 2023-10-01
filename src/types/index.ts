@@ -9,3 +9,7 @@ export type Social = {
   href: string;
   icon: IconName;
 };
+
+export type ConnectionOption = {
+  title: string;
+};

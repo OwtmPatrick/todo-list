@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Buffer } from 'buffer';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './theme';
-// import Example from './example/Example';
 import { App } from './App';
-import { Web3ContextProvider } from './libs/components/Web3ContextProvider';
+import { Web3ContextProvider } from './web3/Web3ContextProvider';
 
 if (window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;
