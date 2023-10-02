@@ -22,6 +22,7 @@ export const ConnectWallet = () => {
         color="white"
         background="green.200"
         fontSize={{ lg: '18px' }}
+        boxShadow="0px 8px 16px 0px rgba(8, 216, 153, 0.20)"
         onClick={onOpen}
       >
         Connect wallet

@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import { Box } from '@chakra-ui/react';
-import { Header } from './layout/Header';
-import { Footer } from './layout/Footer';
+import { RouterProvider } from 'react-router-dom';
 import { ConnectionType, getConnection, tryActivateConnector } from './web3/connections';
 import { LocalStorageKeys } from './constants/localStorage';
+import { router } from './navigation/router';
 
 import './App.css';
 
@@ -17,13 +16,5 @@ export const App = () => {
     }
   }, []);
 
-  return (
-    <>
-      <Header />
-
-      <Box as="main" flexGrow="1" />
-
-      <Footer />
-    </>
-  );
+  return <RouterProvider router={router} />;
 };
