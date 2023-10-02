@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Box, BoxProps } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../../assets/logo.svg';
+import { Routes } from '../../navigation/Routes';
 
 export const Logo: FC<{ wrapperProps?: BoxProps }> = ({ wrapperProps }) => (
   <Box
-    as="a"
-    href="/"
     position={{ lg: 'absolute' }}
     top={{ lg: '50%' }}
     left={{ lg: '50%' }}
@@ -15,6 +15,8 @@ export const Logo: FC<{ wrapperProps?: BoxProps }> = ({ wrapperProps }) => (
     transition="opacity .2s"
     {...wrapperProps}
   >
-    <LogoIcon />
+    <Link to={Routes.HOME}>
+      <LogoIcon />
+    </Link>
   </Box>
 );

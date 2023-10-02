@@ -1,4 +1,5 @@
-import { List, ListItem, Link } from '@chakra-ui/react';
+import { List, ListItem, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { navigation } from '../../navigation/navigation';
 
 export const Navigation = () => (
@@ -11,8 +12,10 @@ export const Navigation = () => (
   >
     {navigation.map(({ title, href }) => (
       <ListItem key={title} textAlign="center">
-        <Link href={href} transition="0.2s" color="gray.100">
-          {title}
+        <Link to={href}>
+          <Text transition="0.2s" color="gray.100" _hover={{ opacity: '0.7' }}>
+            {title}
+          </Text>
         </Link>
       </ListItem>
     ))}
