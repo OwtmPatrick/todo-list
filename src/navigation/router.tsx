@@ -7,26 +7,29 @@ import { CookiePolicy } from '../pages/CookiePolicy';
 
 import { Routes } from './Routes';
 
-export const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: Routes.HOME,
-        element: <Home />
-      },
-      {
-        path: Routes.PRIVACY_POLICY,
-        element: <PrivacyPolicy />
-      },
-      {
-        path: Routes.TERMS_CONDITIONS,
-        element: <TermsConditions />
-      },
-      {
-        path: Routes.COOKIE_POLICY,
-        element: <CookiePolicy />
-      }
-    ]
-  }
-]);
+export const router = createBrowserRouter(
+  [
+    {
+      element: <Layout />,
+      children: [
+        {
+          path: Routes.HOME,
+          element: <Home />
+        },
+        {
+          path: Routes.PRIVACY_POLICY,
+          element: <PrivacyPolicy />
+        },
+        {
+          path: Routes.TERMS_CONDITIONS,
+          element: <TermsConditions />
+        },
+        {
+          path: Routes.COOKIE_POLICY,
+          element: <CookiePolicy />
+        }
+      ]
+    }
+  ],
+  { basename: '/web3-wallet-connect' }
+);

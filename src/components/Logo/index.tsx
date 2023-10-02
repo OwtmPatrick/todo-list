@@ -5,7 +5,7 @@ import { ReactComponent as LogoIcon } from '../../assets/logo.svg';
 export const Logo: FC<{ wrapperProps?: BoxProps }> = ({ wrapperProps }) => (
   <Box
     as="a"
-    href="#"
+    href="/"
     position={{ lg: 'absolute' }}
     top={{ lg: '50%' }}
     left={{ lg: '50%' }}
