@@ -28,7 +28,7 @@ export const Wallet = () => {
       {isActive ? (
         <Box display="flex" alignItems="center" h={{ base: '40px', lg: '48px' }}>
           <Menu>
-            <MenuButton>
+            <MenuButton padding="10px 12px" background="white" borderRadius="20px">
               <HStack gap="8px">
                 <Image
                   width={18}
