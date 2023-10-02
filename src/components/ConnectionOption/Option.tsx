@@ -25,7 +25,7 @@ export const Option = ({
   return (
     <Button variant="outline" colorScheme="teal" w="100%" onClick={onClick}>
       <HStack w="100%" justifyContent="center">
-        <Image src={img} width={25} height={25} borderRadius="3px" />
+        <Image src={`${window.location.href}${img}`} width={25} height={25} borderRadius="3px" />
         <Text>{ConnectButtonTitle[connectionType]}</Text>
       </HStack>
     </Button>

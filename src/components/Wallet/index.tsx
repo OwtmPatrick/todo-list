@@ -28,12 +28,14 @@ export const Wallet = () => {
       {isActive ? (
         <Box display="flex" alignItems="center" h={{ base: '40px', lg: '48px' }}>
           <Menu>
-            <MenuButton padding="10px 12px" background="white" borderRadius="20px">
+            <MenuButton padding="10px 12px" background="white" borderRadius="40px">
               <HStack gap="8px">
                 <Image
                   width={18}
                   height={18}
-                  src={ConnectButtonImage[connectionType as ConnectionType]}
+                  src={`${window.location.href}${
+                    ConnectButtonImage[connectionType as ConnectionType]
+                  }`}
                 />
                 <Text color="green.200" fontSize={{ base: '12px', lg: '16px' }}>
                   {shortAddress(account!)}
