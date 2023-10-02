@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { VStack, Link } from '@chakra-ui/react';
+import { VStack, Button, HStack, Image, Text } from '@chakra-ui/react';
 import { ConnectionType, getHasMetaMaskExtensionInstalled } from '../../web3/connections';
 import { METAMASK_URL } from '../../web3/constants';
 import { Option } from '../ConnectionOption/Option';
@@ -15,7 +15,22 @@ export const ConnectionOptions: FC<ConnectOptionsProps> = ({ onClose }) => {
     const metaMaskOption = hasMetaMaskExtension ? (
       <Option connectionType={ConnectionType.INJECTED} img="/assets/mm.png" onClose={onClose} />
     ) : (
-      <Link href={METAMASK_URL}>Install Metamask</Link>
+      <Button
+        variant="outline"
+        colorScheme="teal"
+        w="100%"
+        onClick={() => window.open(METAMASK_URL)}
+      >
+        <HStack w="100%" justifyContent="center">
+          <Image
+            src={`${window.location.href}/assets/mm.png`}
+            width={25}
+            height={25}
+            borderRadius="3px"
+          />
+          <Text>Install Metamask</Text>
+        </HStack>
+      </Button>
     );
 
     const coinbaseWalletOption = (
