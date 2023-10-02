@@ -3,6 +3,7 @@ import { VStack, Button, HStack, Image, Text } from '@chakra-ui/react';
 import { ConnectionType, getHasMetaMaskExtensionInstalled } from '../../web3/connections';
 import { METAMASK_URL } from '../../web3/constants';
 import { Option } from '../ConnectionOption/Option';
+import { repoName } from '../../constants/config';
 
 type ConnectOptionsProps = {
   onClose: () => void;
@@ -23,7 +24,7 @@ export const ConnectionOptions: FC<ConnectOptionsProps> = ({ onClose }) => {
       >
         <HStack w="100%" justifyContent="center">
           <Image
-            src={`${window.location.href}/assets/mm.png`}
+            src={`${window.location.origin}/${repoName}/assets/mm.png`}
             width={25}
             height={25}
             borderRadius="3px"
