@@ -6,12 +6,15 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  ModalBody
+  ModalBody,
+  VStack
 } from '@chakra-ui/react';
-import { ConnectionOptions } from '../ConnectionOptions/ConnectionOptions';
+import { useConnect } from 'wagmi';
+import { WalletOption } from './WalletOption';
 
 export const ConnectWallet = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { connectors, connect } = useConnect();
 
   return (
     <>
@@ -34,7 +37,18 @@ export const ConnectWallet = () => {
           <ModalHeader>Select Wallet</ModalHeader>
           <ModalCloseButton />
           <ModalBody paddingBottom="30px">
-            <ConnectionOptions onClose={onClose} />
+            <VStack>
+              {connectors.map((connector) => (
+                <WalletOption
+                  key={connector.uid}
+                  connector={connector}
+                  onClick={() => {
+                    connect({ connector });
+                    onClose();
+                  }}
+                />
+              ))}
+            </VStack>
           </ModalBody>
         </ModalContent>
       </Modal>

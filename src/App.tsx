@@ -1,20 +1,17 @@
-import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { ConnectionType, getConnection, tryActivateConnector } from './web3/connections';
-import { LocalStorageKeys } from './constants/localStorage';
+import { WagmiProvider } from 'wagmi';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { router } from './navigation/router';
+import { config } from './config';
 
 import './App.css';
 
-export const App = () => {
-  useEffect(() => {
-    const connectionType = localStorage.getItem(LocalStorageKeys.WEB3_CONNECTION_TYPE);
+const queryClient = new QueryClient();
 
-    if (connectionType) {
-      const { connector } = getConnection(connectionType as ConnectionType);
-      tryActivateConnector(connector);
-    }
-  }, []);
-
-  return <RouterProvider router={router} />;
-};
+export const App = () => (
+  <WagmiProvider config={config}>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </WagmiProvider>
+);

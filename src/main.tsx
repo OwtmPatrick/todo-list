@@ -4,7 +4,6 @@ import { Buffer } from 'buffer';
 import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from './theme';
 import { App } from './App';
-import { Web3ContextProvider } from './web3/Web3ContextProvider';
 
 if (window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;
@@ -15,10 +14,8 @@ window.Buffer = Buffer;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Web3ContextProvider>
-      <ChakraProvider theme={theme}>
-        <App />
-      </ChakraProvider>
-    </Web3ContextProvider>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
   </React.StrictMode>
 );
