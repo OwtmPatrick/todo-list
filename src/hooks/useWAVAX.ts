@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useContract, useSigner, useWriteContract, useReadContract } from 'wagmi';
+import { useWriteContract } from 'wagmi';
 // import { useCont } from 'wagmi';
 import WETHArtifact from '../constants/abis/ERC20.json';
 

@@ -29,11 +29,11 @@ export const useSwap = () => {
   //   const provider = useProvider();
   //   const { data: signer } = useSigner();
   const { address } = useAccount();
-  const { data, status, error, writeContract } = useWriteContract({
+  const { data, error, writeContract } = useWriteContract({
     // onSettled: (data, error) => {}
   });
-  const { approve, deposit } = useWAVAX();
-  //   console.log('data', data, error);
+  const { approve } = useWAVAX();
+  console.log('data', data, error);
   const { data: token0 } = useReadContract({
     address: POOL_ADDRESS,
     abi: IUniswapV3PoolArtifact.abi,
@@ -138,11 +138,15 @@ export const useSwap = () => {
     return outputAmount;
   };
 
+  // @ts-ignore
   const getPoolImmutables = (): Immutables => ({ token0, token1, fee });
 
   const getPoolState = (): State => ({
+    // @ts-ignore
     liquidity,
+    // @ts-ignore
     sqrtPriceX96: slot0[0],
+    // @ts-ignore
     tick: slot0[1]
   });
 
