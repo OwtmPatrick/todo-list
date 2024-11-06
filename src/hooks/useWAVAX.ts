@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useContract, useSigner, useWriteContract, useReadContract } from 'wagmi';
 // import { useCont } from 'wagmi';
-import WETHArtifact from '../utils/abis/ERC20.json';
+import WETHArtifact from '../constants/abis/ERC20.json';
 
 const WAVAX_ADDRESS = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7';
 const WAVAX_DECIMALS = 18;

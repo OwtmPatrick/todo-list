@@ -1,20 +1,19 @@
-import { useBalance, useAccount } from 'wagmi';
-// import { ethers, providers, BigNumber } from 'ethers';
 import { useState, ChangeEvent } from 'react';
 import { HStack, Stack, Input, Button, Card, CardBody, CardHeader, Text } from '@chakra-ui/react';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
-import { useEthersProvider } from '../../hooks/useEthersProvider';
 import { useSwap } from '../../hooks/useSwap';
 import { Icon } from '../Icon';
-// import { Field } from '@/components/ui/field';
+import { WAVAX_ADDRESS, DAI_ADDRESS } from '../../constants/contracts';
+import { round } from '../../utils';
 
 export const SwapCard = () => {
-  //   const { address, connector } = useAccount();
   const [amount, setAmount] = useState('');
-  //   const [token1Value, setToken2Value] = useState('');
-  //   const [amountIn, setAmountIn] = useState(0.1); // 0.1 WBTC
+  const wavaxAmount = useTokenBalance(WAVAX_ADDRESS);
+  const daiAmount = useTokenBalance(DAI_ADDRESS);
 
-  const { getQuote, swap } = useSwap();
+  const { swap } = useSwap();
+
+  //   console.log(getQuote());
 
   const handleTokenAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -45,7 +44,7 @@ export const SwapCard = () => {
               <Icon name="avax" />
               <Text>WAVAX</Text>
             </HStack>
-            <Text>1111.1</Text>
+            <Text>{round(wavaxAmount)}</Text>
           </HStack>
         </CardHeader>
         <CardBody>
@@ -65,7 +64,7 @@ export const SwapCard = () => {
               <Icon name="dai" />
               <Text>DAI</Text>
             </HStack>
-            <Text>55555</Text>
+            <Text>{round(daiAmount)}</Text>
           </HStack>
         </CardHeader>
         <CardBody>

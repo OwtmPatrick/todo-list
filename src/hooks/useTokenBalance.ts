@@ -1,6 +1,6 @@
 import { useAccount, useReadContract, useToken } from 'wagmi';
 import { ethers } from 'ethers';
-import abi from '../utils/abis/ERC20.json';
+import abi from '../constants/abis/ERC20.json';
 
 export const useTokenBalance = (tokenAddress: `0x${string}`) => {
   const { address } = useAccount();
@@ -17,5 +17,5 @@ export const useTokenBalance = (tokenAddress: `0x${string}`) => {
     return ethers.utils.formatUnits(balance as number, token.decimals);
   }
 
-  return 0;
+  return '0';
 };

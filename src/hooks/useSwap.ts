@@ -3,7 +3,7 @@ import IUniswapV3PoolArtifact from '@uniswap/v3-core/artifacts/contracts/interfa
 import { ethers } from 'ethers';
 import { Pool } from '@uniswap/v3-sdk';
 import { Token } from '@uniswap/sdk-core';
-import SwapRouterAbi from '../utils/abis/SwapRouter.json';
+import SwapRouterAbi from '../constants/abis/SwapRouter.json';
 import { useWAVAX } from './useWAVAX';
 
 interface Immutables {
