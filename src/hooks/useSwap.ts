@@ -33,7 +33,7 @@ export const useSwap = () => {
     // onSettled: (data, error) => {}
   });
   const { approve, deposit } = useWAVAX();
-  console.log('data', data, error);
+  //   console.log('data', data, error);
   const { data: token0 } = useReadContract({
     address: POOL_ADDRESS,
     abi: IUniswapV3PoolArtifact.abi,
