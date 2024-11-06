@@ -1,23 +1,45 @@
 import { useBalance, useAccount } from 'wagmi';
 import { ethers, providers, BigNumber } from 'ethers';
-import { useState } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
+import {
+  HStack,
+  Stack,
+  Input,
+  Button,
+  Center,
+  Card,
+  CardBody,
+  CardHeader,
+  Text
+} from '@chakra-ui/react';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { useEthersProvider } from '../../hooks/useEthersProvider';
 import { useSwap } from '../../hooks/useSwap';
-
-const daiContractAddress = '0xd586e7f844cea2f87f50152665bcbc2c279d8d70';
+import { Icon } from '../Icon';
+// import { Field } from '@/components/ui/field';
 
 export const SwapCard = () => {
-  const { address, connector } = useAccount();
-  const [inputToken, setInputToken] = useState('0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'); // WBTC
-  const [outputToken, setOutputToken] = useState('0xdAC17F958D2ee523a2206206994597C13D831ec7'); // USDT
-  const [amountIn, setAmountIn] = useState(0.1); // 0.1 WBTC
+  //   const { address, connector } = useAccount();
+  const [amount, setAmount] = useState('');
+  //   const [token1Value, setToken2Value] = useState('');
+  //   const [amountIn, setAmountIn] = useState(0.1); // 0.1 WBTC
+
+  useEffect(() => {
+    console.log('sawp card');
+  }, []);
 
   const { getQuote, swap } = useSwap();
 
-  //   console.log(useTokenBalance(daiContractAddress));
-  console.log('quote: ', getQuote());
-  //   console.log(new ethers.providers.JsonRpcProvider());
+  const handleTokenAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value }
+    } = e;
+
+    if (/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(value) || value === '') {
+      setAmount(value);
+    }
+  };
+
   const handleSwap = async () => {
     try {
       console.log('swap');
@@ -29,28 +51,52 @@ export const SwapCard = () => {
     }
   };
   return (
-    <div>
-      <input
-        type="text"
-        value={inputToken}
-        onChange={(e) => setInputToken(e.target.value)}
-        placeholder="Input Token"
-      />
-      <input
-        type="number"
-        value={amountIn}
-        onChange={(e) => setAmountIn(e.target.value as any)}
-        placeholder="Amount In"
-      />
-      <input
-        type="text"
-        value={outputToken}
-        onChange={(e) => setOutputToken(e.target.value)}
-        placeholder="Output Token"
-      />
-      <button type="button" onClick={handleSwap}>
-        Swap
-      </button>
-    </div>
+    <Center>
+      <Stack gap="4" w="100%" maxW={500}>
+        <Card>
+          <CardHeader>
+            <HStack gap={2} justify="space-between">
+              <HStack gap={2}>
+                <Icon name="avax" />
+                <Text>WAVAX</Text>
+              </HStack>
+              <Text>1111.1</Text>
+            </HStack>
+          </CardHeader>
+          <CardBody>
+            <Input
+              placeholder="Enter amount"
+              variant="subtle"
+              size="lg"
+              value={amount}
+              onChange={handleTokenAmountChange}
+            />
+          </CardBody>
+        </Card>
+        <Card variant="subtle">
+          <CardHeader>
+            <HStack gap={2} justify="space-between">
+              <HStack gap={2}>
+                <Icon name="dai" />
+                <Text>DAI</Text>
+              </HStack>
+              <Text>55555</Text>
+            </HStack>
+          </CardHeader>
+          <CardBody>
+            <Input variant="subtle" size="lg" disabled />
+          </CardBody>
+        </Card>
+        <Button
+          colorScheme="green"
+          color="white"
+          background="green.200"
+          size="lg"
+          onClick={handleSwap}
+        >
+          Swap
+        </Button>
+      </Stack>
+    </Center>
   );
 };
