@@ -6,7 +6,7 @@ const WAVAX_ADDRESS = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7';
 const WAVAX_DECIMALS = 18;
 
 export const useApprove = (address: string, contractAddress: string) => {
-  const { data: allowance, isFetching: isFetchingApproving } = useReadContract({
+  const { data: allowance, isFetching } = useReadContract({
     address: WAVAX_ADDRESS,
     abi: erc20Abi,
     functionName: 'allowance',
@@ -27,9 +27,9 @@ export const useApprove = (address: string, contractAddress: string) => {
   };
 
   return {
-    isFetchingApproving,
-    allowance: isFetchingApproving
-      ? '0'
+    isFetching,
+    allowance: isFetching
+      ? undefined
       : ethers.utils.formatUnits(allowance as number, WAVAX_DECIMALS),
     approve
   };

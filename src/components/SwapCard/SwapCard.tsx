@@ -1,19 +1,44 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useMemo } from 'react';
 import { HStack, Stack, Input, Button, Card, CardBody, CardHeader, Text } from '@chakra-ui/react';
+import { useAccount } from 'wagmi';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { useSwap } from '../../hooks/useSwap';
 import { Icon } from '../Icon';
-import { WAVAX_ADDRESS, DAI_ADDRESS } from '../../constants/contracts';
+import { WAVAX_ADDRESS, DAI_ADDRESS, ROUTER_ADDRESS } from '../../constants/contracts';
 import { round } from '../../utils';
+import { useApprove } from '../../hooks/useApprove';
 
 export const SwapCard = () => {
-  const [amount, setAmount] = useState('');
-  const wavaxAmount = useTokenBalance(WAVAX_ADDRESS);
-  const daiAmount = useTokenBalance(DAI_ADDRESS);
+  const { address } = useAccount();
+  const { allowance } = useApprove(address!, ROUTER_ADDRESS);
+  const [amountTokenIn, setAmountTokenIn] = useState('');
+  const { balance: wavaxBalance } = useTokenBalance(WAVAX_ADDRESS);
+  const { balance: daiBalance } = useTokenBalance(DAI_ADDRESS);
 
-  const { swap } = useSwap();
+  const { getTokenPrice, swap } = useSwap();
+  const tokenPrice = getTokenPrice();
 
-  //   console.log(getQuote());
+  const amountTokenOut = useMemo(() => {
+    if (!tokenPrice || !amountTokenIn) return '';
+
+    return (Number(amountTokenIn) * Number(tokenPrice)).toFixed(2);
+  }, [amountTokenIn, tokenPrice]);
+
+  const buttonTitle = useMemo((): string => {
+    if (!allowance || !amountTokenIn) return 'Swap';
+
+    if (Number(amountTokenIn) > Number(allowance)) {
+      return 'Approve';
+    }
+
+    return 'Swap';
+  }, [allowance, amountTokenIn]);
+
+  const isButtonDisabled = useMemo((): boolean => {
+    if (!wavaxBalance) return true;
+
+    return Number(wavaxBalance) < Number(amountTokenIn);
+  }, [wavaxBalance, amountTokenIn]);
 
   const handleTokenAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -21,16 +46,19 @@ export const SwapCard = () => {
     } = e;
 
     if (/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(value) || value === '') {
-      setAmount(value);
+      setAmountTokenIn(value);
+    }
+  };
+
+  const setMaxAmount = () => {
+    if (wavaxBalance) {
+      setAmountTokenIn(wavaxBalance!);
     }
   };
 
   const handleSwap = async () => {
     try {
-      console.log('swap');
-      const res = await swap(0.001);
-
-      console.log('res;l ', res);
+      await swap(Number(amountTokenIn));
     } catch (e) {
       console.log(e);
     }
@@ -44,7 +72,18 @@ export const SwapCard = () => {
               <Icon name="avax" />
               <Text>WAVAX</Text>
             </HStack>
-            <Text>{round(wavaxAmount)}</Text>
+            <HStack gap={2}>
+              <Button
+                colorScheme="green"
+                color="white"
+                background="green.200"
+                size="xs"
+                onClick={setMaxAmount}
+              >
+                max
+              </Button>
+              <Text>{wavaxBalance ? round(wavaxBalance!) : 0}</Text>
+            </HStack>
           </HStack>
         </CardHeader>
         <CardBody>
@@ -52,7 +91,7 @@ export const SwapCard = () => {
             placeholder="Enter amount"
             variant="subtle"
             size="lg"
-            value={amount}
+            value={amountTokenIn}
             onChange={handleTokenAmountChange}
           />
         </CardBody>
@@ -64,11 +103,11 @@ export const SwapCard = () => {
               <Icon name="dai" />
               <Text>DAI</Text>
             </HStack>
-            <Text>{round(daiAmount)}</Text>
+            <Text>{daiBalance ? round(daiBalance!) : 0}</Text>
           </HStack>
         </CardHeader>
         <CardBody>
-          <Input variant="subtle" size="lg" disabled />
+          <Input variant="subtle" size="lg" value={amountTokenOut} disabled />
         </CardBody>
       </Card>
       <Button
@@ -77,8 +116,9 @@ export const SwapCard = () => {
         background="green.200"
         size="lg"
         onClick={handleSwap}
+        isDisabled={isButtonDisabled}
       >
-        Swap
+        {buttonTitle}
       </Button>
     </Stack>
   );
