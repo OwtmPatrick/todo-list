@@ -10,10 +10,10 @@ import { useApprove } from '../../hooks/useApprove';
 
 export const SwapCard = () => {
   const { address } = useAccount();
-  const { allowance } = useApprove(address!, ROUTER_ADDRESS);
+  const { allowance, approve, refetch: refetchApprove } = useApprove(address!, ROUTER_ADDRESS);
   const [amountTokenIn, setAmountTokenIn] = useState('');
-  const { balance: wavaxBalance } = useTokenBalance(WAVAX_ADDRESS);
-  const { balance: daiBalance } = useTokenBalance(DAI_ADDRESS);
+  const { balance: wavaxBalance, refetch: refetchWavaxBalance } = useTokenBalance(WAVAX_ADDRESS);
+  const { balance: daiBalance, refetch: refetchDaiBalance } = useTokenBalance(DAI_ADDRESS);
 
   const { getTokenPrice, swap } = useSwap();
   const tokenPrice = getTokenPrice();
@@ -58,9 +58,18 @@ export const SwapCard = () => {
 
   const handleSwap = async () => {
     try {
-      await swap(Number(amountTokenIn));
+      const shouldApproveFirst =
+        allowance && amountTokenIn && Number(amountTokenIn) > Number(allowance);
+      if (shouldApproveFirst) {
+        await approve(Number(amountTokenIn) - Number(allowance));
+        await refetchApprove();
+      } else {
+        await swap(Number(amountTokenIn));
+        await refetchWavaxBalance();
+        await refetchDaiBalance();
+      }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
   return (
@@ -117,6 +126,7 @@ export const SwapCard = () => {
         size="lg"
         onClick={handleSwap}
         isDisabled={isButtonDisabled}
+        // isLoading={isButtonLoading}
       >
         {buttonTitle}
       </Button>

@@ -6,23 +6,31 @@ const WAVAX_ADDRESS = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7';
 const WAVAX_DECIMALS = 18;
 
 export const useApprove = (address: string, contractAddress: string) => {
-  const { data: allowance, isFetching } = useReadContract({
+  const {
+    data: allowance,
+    isFetching,
+    refetch
+  } = useReadContract({
     address: WAVAX_ADDRESS,
     abi: erc20Abi,
     functionName: 'allowance',
     args: [address, contractAddress]
   });
 
-  const { writeContractAsync } = useWriteContract();
+  const {
+    isPending: isPendingApproving,
+    isSuccess: isApproved,
+    writeContractAsync
+  } = useWriteContract();
 
-  const approve = async (address: string, amount: number) => {
-    const parsedAmount = ethers.utils.parseUnits(amount.toString(), WAVAX_DECIMALS);
+  const approve = async (amount: number) => {
+    const parsedAmount = ethers.utils.parseUnits(amount.toFixed(6).toString(), WAVAX_DECIMALS);
 
     return writeContractAsync({
       abi: erc20Abi,
       address: WAVAX_ADDRESS,
       functionName: 'approve',
-      args: [address, parsedAmount]
+      args: [contractAddress, parsedAmount]
     });
   };
 
@@ -31,6 +39,9 @@ export const useApprove = (address: string, contractAddress: string) => {
     allowance: isFetching
       ? undefined
       : ethers.utils.formatUnits(allowance as number, WAVAX_DECIMALS),
-    approve
+    approve,
+    isPendingApproving,
+    isApproved,
+    refetch
   };
 };

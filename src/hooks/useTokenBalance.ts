@@ -4,7 +4,11 @@ import abi from '../constants/abis/ERC20.json';
 
 export const useTokenBalance = (tokenAddress: `0x${string}`) => {
   const { address } = useAccount();
-  const { data: balance, isFetching: isSFetchingBalance } = useReadContract({
+  const {
+    data: balance,
+    isFetching: isSFetchingBalance,
+    refetch
+  } = useReadContract({
     address: tokenAddress,
     abi,
     functionName: 'balanceOf',
@@ -16,6 +20,7 @@ export const useTokenBalance = (tokenAddress: `0x${string}`) => {
 
   return {
     isFetching,
-    balance: isFetching ? undefined : ethers.utils.formatUnits(balance as number, token!.decimals)
+    balance: isFetching ? undefined : ethers.utils.formatUnits(balance as number, token!.decimals),
+    refetch
   };
 };
